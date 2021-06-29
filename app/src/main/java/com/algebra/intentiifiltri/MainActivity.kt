@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 
 const val STRING_KEY = "STRING_KEY"
+const val REZULTAT_KEY = "REZULTAT_KEY"
 const val PICK_CONTACT_REQUEST = 2
 const val REQUEST_CODE = 1
 
@@ -40,9 +41,16 @@ class MainActivity : AppCompatActivity( ) {
             startActivity( startSecondActivity )
         }
 
+        // intent.putExtra( "LOZINmKA", "jfdp309IKKJ/&(kwp" )
+        // startActivity( intent )
+
+
+
         bStartForResult.setOnClickListener {
-            val startSecondActivity = Intent( this, SecondActivity::class.java )
-            startActivityForResult(startSecondActivity, REQUEST_CODE)
+            val startSecondActivity = Intent( this, SecondActivity::class.java ).apply {
+                putExtra( STRING_KEY, etValue.text.toString( ) )
+            }
+            startActivityForResult( startSecondActivity, REQUEST_CODE )
         }
 
         bPickContact.setOnClickListener { pickContact() }
@@ -65,10 +73,15 @@ class MainActivity : AppCompatActivity( ) {
             type = "text/plain"
         }
 
+        startActivity( sendIntent )
+
+        /*
         // Verify that the intent will resolve to an activity
         if ( sendIntent.resolveActivity( packageManager ) != null) {
             startActivity( sendIntent )
         }
+
+         */
 
     }
 
@@ -82,7 +95,7 @@ class MainActivity : AppCompatActivity( ) {
     override fun onActivityResult( requestCode: Int, resultCode: Int, data: Intent? ) {
         super.onActivityResult( requestCode, resultCode, data )
         if ( requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK ) {
-            Toast.makeText( this, "Back from second", Toast.LENGTH_LONG ).show( )
+            Toast.makeText( this, "Back from second: ${data?.getStringExtra( REZULTAT_KEY )}", Toast.LENGTH_LONG ).show( )
         }
 
         if ( requestCode==PICK_CONTACT_REQUEST ) {
