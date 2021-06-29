@@ -59,23 +59,23 @@ class MainActivity : AppCompatActivity( ) {
 
     private fun startImplicit() {
         // Create the text message with a string
-        val sendIntent = Intent().apply {
+        val sendIntent = Intent( ).apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, etValue.text)
+            putExtra( Intent.EXTRA_TEXT, etValue.text.toString( ) )
             type = "text/plain"
         }
 
         // Verify that the intent will resolve to an activity
-        if (sendIntent.resolveActivity(packageManager) != null) {
-            startActivity(sendIntent)
+        if ( sendIntent.resolveActivity( packageManager ) != null) {
+            startActivity( sendIntent )
         }
 
     }
 
     fun pickContact() {
-        Intent(Intent.ACTION_PICK, Uri.parse("content://contacts")).also { pickContactIntent ->
+        Intent( Intent.ACTION_PICK, Uri.parse( "content://contacts" ) ).also { pickContactIntent ->
             pickContactIntent.type = Phone.CONTENT_TYPE // Show user only contacts w/ phone numbers
-            startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST)
+            startActivityForResult( pickContactIntent, PICK_CONTACT_REQUEST )
         }
     }
 
